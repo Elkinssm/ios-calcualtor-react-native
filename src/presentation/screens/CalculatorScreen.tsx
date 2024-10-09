@@ -1,59 +1,71 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Pressable, Text, View} from 'react-native';
 import {colors, globalStyles} from '../../config/theme/app-theme';
 import {CalculatorButton} from '../components/CalculatorButton';
 import {useCalculator} from '../hooks/useCalculator';
 
 export const CalculatorScreen = () => {
   const {
+    formula,
     number,
-    buildNumber,
     prevNumber,
-    clear,
+    buildNumber,
     toggleSign,
+    clean,
     deleteOperation,
     divideOperation,
     multiplyOperation,
-    substractOperation,
-    sumOperation,
+    subtractOperation,
+    addOperation,
     calculateResult,
   } = useCalculator();
 
   return (
     <View style={globalStyles.calculatorContainer}>
-      <View style={globalStyles.secondContainer}>
+      <View style={{paddingHorizontal: 30, paddingBottom: 20}}>
         <Text
           adjustsFontSizeToFit
           numberOfLines={1}
           style={globalStyles.mainResult}>
-          {number}
+          {formula}
         </Text>
-        <Text
-          adjustsFontSizeToFit
-          numberOfLines={1}
-          style={globalStyles.subResult}>
-          {prevNumber === '0' ? '' : prevNumber}
-        </Text>
+
+        {formula === prevNumber ? (
+          <Text style={globalStyles.subResult}> </Text>
+        ) : (
+          <Text
+            adjustsFontSizeToFit
+            numberOfLines={1}
+            style={globalStyles.subResult}>
+            {prevNumber}
+          </Text>
+        )}
+        {/* <Text
+                adjustsFontSizeToFit
+                numberOfLines={ 1 }
+                style={ globalStyles.subResult }>
+                {  prevNumber }
+              </Text> */}
       </View>
 
       <View style={globalStyles.row}>
         <CalculatorButton
-          onPress={() => clear()}
-          blackText
-          color={colors.lightGray}
+          onPress={clean}
           label="C"
-        />
-        <CalculatorButton
-          onPress={() => toggleSign()}
           blackText
           color={colors.lightGray}
+        />
+        <CalculatorButton
+          onPress={toggleSign}
           label="+/-"
-        />
-        <CalculatorButton
-          onPress={() => deleteOperation()}
           blackText
           color={colors.lightGray}
+        />
+        <CalculatorButton
+          onPress={deleteOperation}
           label="del"
+          blackText
+          color={colors.lightGray}
         />
         <CalculatorButton
           onPress={divideOperation}
@@ -78,7 +90,7 @@ export const CalculatorScreen = () => {
         <CalculatorButton onPress={() => buildNumber('5')} label="5" />
         <CalculatorButton onPress={() => buildNumber('6')} label="6" />
         <CalculatorButton
-          onPress={substractOperation}
+          onPress={subtractOperation}
           label="-"
           color={colors.orange}
         />
@@ -89,7 +101,7 @@ export const CalculatorScreen = () => {
         <CalculatorButton onPress={() => buildNumber('2')} label="2" />
         <CalculatorButton onPress={() => buildNumber('3')} label="3" />
         <CalculatorButton
-          onPress={sumOperation}
+          onPress={addOperation}
           label="+"
           color={colors.orange}
         />
